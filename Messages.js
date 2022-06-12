@@ -1,5 +1,13 @@
 import React, { useCallback, useState } from "react";
-import { StyleSheet, View, Button, TextInput, FlatList, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Button,
+  TextInput,
+  FlatList,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { db } from "./firebase";
 import firebase from "firebase/compat/app";
 import { useFocusEffect } from "@react-navigation/native";
@@ -37,10 +45,15 @@ const Messages = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
+      style={styles.flatList}
         data={messages}
-        renderItem={({ item, index }) => <Text>{item.data.message}</Text>}
+        renderItem={({ item, index }) => (
+          <TouchableOpacity>
+            <Text>{item.data.message}</Text>
+          </TouchableOpacity>
+        )}
       />
       <TextInput
         value={input}
@@ -48,11 +61,15 @@ const Messages = () => {
         onChangeText={(text) => setInput(text)}
         placeholder="Message..."
       />
-      <Button onPress={sendMessage} title="Send Messages" />
+      <Button style={styles.sendButton} onPress={sendMessage} title="Send Messages" />
     </View>
   );
 };
 
 export default Messages;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container:{
+    height: "100%",
+  }
+});
